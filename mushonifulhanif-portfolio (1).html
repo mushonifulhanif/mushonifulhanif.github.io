@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mushoniful Hanif — Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#0a0a0a;--bg2:#111111;--bg3:#1a1a1a;--bg4:#222222;
+    --text:#f0f0f0;--text2:#a0a0a0;--text3:#666666;
+    --accent:#e8e8e8;--border:#2a2a2a;--highlight:#ffffff;
+  }
+  html{scroll-behavior:smooth;height:100%}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:'Space Grotesk',sans-serif;
+    height:100%;overflow:hidden;
+  }
+  body.mobile-mode{overflow:auto;height:auto}
+
+  /* LANG TOGGLE */
+  .lang-toggle{
+    display:flex;align-items:center;gap:4px;
+    background:var(--bg3);border:1px solid var(--border);
+    border-radius:20px;padding:3px;
+  }
+  .lang-btn{
+    padding:4px 12px;border:none;background:transparent;
+    color:var(--text2);cursor:pointer;border-radius:16px;
+    font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:500;
+    transition:all 0.2s;
+  }
+  .lang-btn.active{background:var(--highlight);color:#000}
+
+  /* NAVBAR */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 40px;
+    background:rgba(10,10,10,0.85);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-logo{
+    width:36px;height:36px;background:var(--highlight);
+    border-radius:8px;display:flex;align-items:center;justify-content:center;
+    font-family:'Syne',sans-serif;font-weight:800;font-size:14px;color:#000;
+  }
+  .nav-links{
+    display:flex;align-items:center;gap:2px;
+    background:var(--bg3);border:1px solid var(--border);
+    border-radius:24px;padding:4px;
+  }
+  .nav-link{
+    padding:6px 16px;border-radius:20px;
+    color:var(--text2);text-decoration:none;
+    font-size:13px;font-weight:500;
+    transition:all 0.2s;cursor:pointer;
+  }
+  .nav-link:hover,.nav-link.active{background:var(--bg4);color:var(--text)}
+  .nav-right{display:flex;align-items:center;gap:12px}
+  .btn-talk{
+    padding:8px 20px;background:var(--highlight);color:#000;
+    border:none;border-radius:20px;font-family:'Space Grotesk',sans-serif;
+    font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s;
+  }
+  .btn-talk:hover{background:#e0e0e0}
+
+  /* SECTIONS CONTAINER */
+  .sections{
+    position:fixed;top:0;left:0;right:0;bottom:0;
+    padding-top:70px;
+  }
+  body.mobile-mode .sections{position:static;padding-top:70px}
+
+  .section{
+    display:none;height:100%;
+    overflow-y:auto;padding:40px;
+  }
+  body.mobile-mode .section{height:auto;overflow:visible;padding:24px 20px}
+  .section.active{display:block}
+
+  /* ===== HOME ===== */
+  .home-inner{
+    max-width:1100px;margin:0 auto;
+    display:grid;grid-template-columns:1fr 1fr;
+    gap:40px;align-items:center;
+    min-height:calc(100vh - 150px);
+  }
+  body.mobile-mode .home-inner{grid-template-columns:1fr;min-height:auto}
+  .home-tag{
+    display:inline-block;
+    background:var(--bg3);border:1px solid var(--border);
+    border-radius:20px;padding:4px 14px;
+    font-size:12px;color:var(--text2);margin-bottom:20px;
+  }
+  .home-name{font-size:13px;color:var(--text2);margin-bottom:8px}
+  .home-title{
+    font-family:'Syne',sans-serif;font-weight:800;
+    font-size:clamp(36px,4vw,56px);line-height:1.05;
+    color:var(--highlight);margin-bottom:20px;
+  }
+  .home-desc{
+    font-size:15px;line-height:1.7;color:var(--text2);
+    max-width:420px;margin-bottom:32px;
+  }
+  .home-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .btn-primary{
+    padding:10px 24px;background:var(--highlight);color:#000;
+    border:none;border-radius:20px;font-family:'Space Grotesk',sans-serif;
+    font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;
+    text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+  }
+  .btn-primary:hover{background:#e0e0e0;transform:translateY(-1px)}
+  .btn-secondary{
+    padding:10px 24px;background:transparent;color:var(--text);
+    border:1px solid var(--border);border-radius:20px;
+    font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:500;
+    cursor:pointer;transition:all 0.2s;text-decoration:none;
+    display:inline-flex;align-items:center;gap:8px;
+  }
+  .btn-secondary:hover{border-color:var(--text3);background:var(--bg3)}
+  .home-socials{
+    display:flex;gap:12px;margin-top:24px;
+  }
+  .social-link{
+    width:36px;height:36px;background:var(--bg3);border:1px solid var(--border);
+    border-radius:8px;display:flex;align-items:center;justify-content:center;
+    text-decoration:none;color:var(--text2);font-size:16px;transition:all 0.2s;
+  }
+  .social-link:hover{border-color:var(--text3);color:var(--text);background:var(--bg4)}
+  .home-img-wrap{
+    display:flex;justify-content:center;align-items:center;
+  }
+  body.mobile-mode .home-img-wrap{order:-1}
+  .home-avatar{
+    width:280px;height:340px;
+    background:var(--bg3);border:1px solid var(--border);
+    border-radius:24px;
+    display:flex;align-items:center;justify-content:center;
+    position:relative;overflow:hidden;
+  }
+  body.mobile-mode .home-avatar{width:180px;height:220px}
+  .avatar-placeholder{
+    font-family:'Syne',sans-serif;font-size:80px;font-weight:800;
+    color:var(--bg4);
+  }
+  body.mobile-mode .avatar-placeholder{font-size:50px}
+  .avatar-badge{
+    position:absolute;bottom:16px;left:50%;transform:translateX(-50%);
+    background:rgba(10,10,10,0.8);border:1px solid var(--border);
+    border-radius:20px;padding:6px 16px;
+    font-size:11px;color:var(--text2);white-space:nowrap;
+    backdrop-filter:blur(8px);
+  }
+
+  /* ===== SERVICES ===== */
+  .section-header{text-align:center;margin-bottom:40px}
+  .section-title{
+    font-family:'Syne',sans-serif;font-weight:800;
+    font-size:clamp(28px,3vw,40px);color:var(--highlight);margin-bottom:8px;
+  }
+  .section-sub{font-size:13px;color:var(--text3)}
+  .services-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:16px;max-width:1000px;margin:0 auto;
+  }
+  .service-card{
+    background:var(--bg2);border:1px solid var(--border);
+    border-radius:16px;padding:24px;
+    transition:all 0.2s;
+  }
+  .service-card:hover{border-color:#444;background:var(--bg3);transform:translateY(-2px)}
+  .service-icon{
+    width:40px;height:40px;background:var(--bg3);border:1px solid var(--border);
+    border-radius:10px;display:flex;align-items:center;justify-content:center;
+    font-size:18px;margin-bottom:16px;
+  }
+  .service-title{
+    font-family:'Syne',sans-serif;font-weight:700;
+    font-size:16px;color:var(--highlight);margin-bottom:10px;
+  }
+  .service-desc{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:16px}
+  .service-tags{display:flex;flex-wrap:wrap;gap:6px}
+  .service-tag{
+    padding:3px 10px;background:var(--bg3);border:1px solid var(--border);
+    border-radius:12px;font-size:11px;color:var(--text3);
+  }
+
+  /* ===== ABOUT ===== */
+  .about-inner{max-width:900px;margin:0 auto}
+  .about-desc{
+    font-size:15px;line-height:1.8;color:var(--text2);
+    text-align:center;margin-bottom:40px;
+  }
+  .approach-title{
+    text-align:center;font-size:13px;color:var(--text3);
+    text-transform:uppercase;letter-spacing:2px;margin-bottom:20px;
+  }
+  .approach-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:12px;margin-bottom:40px;
+  }
+  body.mobile-mode .approach-grid{grid-template-columns:1fr}
+  .approach-card{
+    background:var(--bg2);border:1px solid var(--border);
+    border-radius:12px;padding:20px;display:flex;align-items:center;gap:12px;
+  }
+  .approach-num{
+    font-family:'Syne',sans-serif;font-weight:800;
+    font-size:11px;color:var(--text3);min-width:24px;
+  }
+  .approach-text{font-size:13px;color:var(--text2)}
+  .stats-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:16px;
+  }
+  body.mobile-mode .stats-grid{grid-template-columns:1fr}
+  .stat-card{
+    background:var(--bg2);border:1px solid var(--border);
+    border-radius:12px;padding:24px;text-align:center;
+  }
+  .stat-num{
+    font-family:'Syne',sans-serif;font-weight:800;
+    font-size:36px;color:var(--highlight);
+  }
+  .stat-label{font-size:12px;color:var(--text3);margin-top:4px}
+
+  /* ===== SKILLS ===== */
+  .skills-inner{max-width:900px;margin:0 auto}
+  .skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  body.mobile-mode .skills-grid{grid-template-columns:1fr}
+  .skill-card{
+    background:var(--bg2);border:1px solid var(--border);
+    border-radius:16px;padding:24px;
+  }
+  .skill-card-title{
+    font-family:'Syne',sans-serif;font-weight:700;
+    font-size:15px;color:var(--highlight);margin-bottom:14px;
+  }
+  .skill-tags{display:flex;flex-wrap:wrap;gap:8px}
+  .skill-tag{
+    padding:5px 12px;background:var(--bg3);border:1px solid var(--border);
+    border-radius:12px;font-size:12px;color:var(--text2);
+  }
+
+  /* ===== PROJECTS ===== */
+  .projects-inner{max-width:1000px;margin:0 auto}
+  .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+  .project-card{
+    background:var(--bg2);border:1px solid var(--border);
+    border-radius:16px;overflow:hidden;
+    transition:all 0.2s;display:flex;flex-direction:column;
+  }
+  .project-card:hover{border-color:#444;transform:translateY(-2px)}
+  .project-thumb{
+    height:160px;background:var(--bg3);
+    display:flex;align-items:center;justify-content:center;
+    border-bottom:1px solid var(--border);position:relative;
+  }
+  .project-thumb-label{
+    font-family:'Syne',sans-serif;font-size:28px;font-weight:800;
+    color:var(--bg4);
+  }
+  .project-body{padding:20px;flex:1;display:flex;flex-direction:column}
+  .project-tag{
+    display:inline-block;padding:2px 10px;background:var(--bg3);
+    border:1px solid var(--border);border-radius:10px;
+    font-size:10px;color:var(--text3);margin-bottom:10px;
+  }
+  .project-name{
+    font-family:'Syne',sans-serif;font-weight:700;
+    font-size:17px;color:var(--highlight);margin-bottom:8px;
+  }
+  .project-desc{font-size:13px;color:var(--text2);line-height:1.6;flex:1}
+  .project-footer{
+    padding:14px 20px;border-top:1px solid var(--border);
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .project-tech{display:flex;gap:6px;flex-wrap:wrap}
+  .project-tech-tag{
+    padding:2px 8px;background:var(--bg3);
+    border-radius:8px;font-size:10px;color:var(--text3);
+  }
+  .project-link{
+    font-size:12px;color:var(--text2);text-decoration:none;
+    display:flex;align-items:center;gap:4px;
+    transition:color 0.2s;
+  }
+  .project-link:hover{color:var(--highlight)}
+
+  /* HAMBURGER */
+  .hamburger{
+    display:none;flex-direction:column;gap:5px;cursor:pointer;
+    background:none;border:none;padding:4px;
+  }
+  .hamburger span{
+    display:block;width:22px;height:2px;
+    background:var(--text);border-radius:2px;transition:all 0.3s;
+  }
+  body.mobile-mode .hamburger{display:flex}
+  body.mobile-mode .nav-links{
+    display:none;position:fixed;top:70px;left:0;right:0;
+    background:var(--bg);border-bottom:1px solid var(--border);
+    flex-direction:column;align-items:stretch;border-radius:0;padding:8px 16px;
+    gap:0;
+  }
+  body.mobile-mode .nav-links.open{display:flex}
+  body.mobile-mode .nav-link{border-radius:8px;padding:10px 16px}
+  body.mobile-mode .btn-talk{display:none}
+
+  /* CONTACT */
+  .contact-inner{max-width:700px;margin:0 auto;text-align:center}
+  .contact-desc{font-size:15px;color:var(--text2);line-height:1.7;margin-bottom:40px}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:40px}
+  body.mobile-mode .contact-grid{grid-template-columns:1fr}
+  .contact-card{
+    background:var(--bg2);border:1px solid var(--border);
+    border-radius:16px;padding:24px;text-align:left;
+  }
+  .contact-card-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:8px}
+  .contact-card-val{font-size:14px;color:var(--text);font-weight:500}
+  .contact-card-link{
+    display:inline-flex;align-items:center;gap:6px;
+    margin-top:12px;font-size:12px;color:var(--text2);text-decoration:none;
+    border:1px solid var(--border);border-radius:20px;padding:6px 14px;
+    transition:all 0.2s;
+  }
+  .contact-card-link:hover{border-color:#555;color:var(--text);background:var(--bg3)}
+
+  /* FOOTER */
+  footer{
+    text-align:center;padding:24px 40px;
+    border-top:1px solid var(--border);
+    font-size:12px;color:var(--text3);
+  }
+</style>
+</head>
+<body id="body">
+
+<nav>
+  <div class="nav-logo">MH</div>
+  <div class="nav-links" id="navLinks">
+    <a class="nav-link active" onclick="showSection('home',this)" data-en="Home" data-id="Beranda">Home</a>
+    <a class="nav-link" onclick="showSection('services',this)" data-en="Services" data-id="Layanan">Services</a>
+    <a class="nav-link" onclick="showSection('about',this)" data-en="About" data-id="Tentang">About</a>
+    <a class="nav-link" onclick="showSection('skills',this)" data-en="Skills" data-id="Keahlian">Skills</a>
+    <a class="nav-link" onclick="showSection('projects',this)" data-en="Projects" data-id="Proyek">Projects</a>
+
+  </div>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en',this)">EN</button>
+      <button class="lang-btn" onclick="setLang('id',this)">ID</button>
+    </div>
+    <button class="btn-talk" onclick="showSection('contact',document.querySelectorAll('.nav-link')[5])">
+      <span data-en="Let's Talk" data-id="Hubungi Saya">Let's Talk</span>
+    </button>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="sections" id="sections">
+
+  <!-- HOME -->
+  <div class="section active" id="sec-home">
+    <div class="home-inner">
+      <div>
+        <div class="home-tag" data-en="✦ Available for freelance work" data-id="✦ Tersedia untuk proyek freelance">✦ Available for freelance work</div>
+        <p class="home-name" data-en="I am Mushoniful Hanif" data-id="Saya Mushoniful Hanif">I am Mushoniful Hanif</p>
+        <h1 class="home-title" data-en="Web Developer<br>& Educator" data-id="Web Developer<br>& Pendidik">Web Developer<br>& Educator</h1>
+        <p class="home-desc" data-en="Building practical web applications for Indonesian educational institutions — from digital report cards to document management systems." data-id="Membangun aplikasi web praktis untuk institusi pendidikan Indonesia — mulai dari rapor digital hingga sistem manajemen dokumen.">Building practical web applications for Indonesian educational institutions — from digital report cards to document management systems.</p>
+        <div class="home-actions">
+          <a class="btn-primary" onclick="showSection('projects',document.querySelectorAll('.nav-link')[4])">
+            <span data-en="View Projects" data-id="Lihat Proyek">View Projects</span> →
+          </a>
+          <a class="btn-secondary" onclick="showSection('contact',document.querySelectorAll('.nav-link')[5])">
+            <span data-en="Contact Me" data-id="Hubungi Saya">Contact Me</span>
+          </a>
+        </div>
+        <div class="home-socials">
+          <a class="social-link" href="https://github.com/mushonifulhanif" title="GitHub" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a class="social-link" href="https://linkedin.com/in/mushonifulhanif" title="LinkedIn" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="home-img-wrap">
+        <div class="home-avatar">
+          <!-- Ganti dengan tag <img> saat foto sudah ada -->
+          <!-- <img src="foto.jpg" alt="Mushoniful Hanif" style="width:100%;height:100%;object-fit:cover"> -->
+          <span class="avatar-placeholder">MH</span>
+          <div class="avatar-badge" data-en="📍 Pati, Indonesia" data-id="📍 Pati, Indonesia">📍 Pati, Indonesia</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <div class="section" id="sec-services">
+    <div class="section-header">
+      <h2 class="section-title" data-en="Services" data-id="Layanan">Services</h2>
+      <p class="section-sub" data-en="Practical solutions for schools and organizations" data-id="Solusi praktis untuk sekolah dan organisasi">Practical solutions for schools and organizations</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🖥️</div>
+        <div class="service-title" data-en="Web App Development" data-id="Pengembangan Aplikasi Web">Web App Development</div>
+        <div class="service-desc" data-en="Custom web applications tailored for Indonesian schools and institutions — from scratch, no templates." data-id="Aplikasi web kustom untuk sekolah dan institusi Indonesia — dari nol, bukan template.">Custom web applications tailored for Indonesian schools and institutions — from scratch, no templates.</div>
+        <div class="service-tags">
+          <span class="service-tag">CodeIgniter 4</span>
+          <span class="service-tag">PHP & MySQL</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📊</div>
+        <div class="service-title" data-en="Digital Report Card (e-Raport)" data-id="Rapor Digital (e-Raport)">Digital Report Card (e-Raport)</div>
+        <div class="service-desc" data-en="Modern digital report card systems that replace fragmented Excel workflows for schools." data-id="Sistem rapor digital modern yang menggantikan Excel yang berantakan di sekolah.">Modern digital report card systems that replace fragmented Excel workflows for schools.</div>
+        <div class="service-tags">
+          <span class="service-tag" data-en="Multi-role access" data-id="Akses multi-peran">Multi-role access</span>
+          <span class="service-tag" data-en="PDF export" data-id="Ekspor PDF">PDF export</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📄</div>
+        <div class="service-title" data-en="Document Management" data-id="Manajemen Dokumen">Document Management</div>
+        <div class="service-desc" data-en="Letter and document systems for pesantren and madrasah with WhatsApp notifications." data-id="Sistem surat dan dokumen untuk pesantren dan madrasah dengan notifikasi WhatsApp.">Letter and document systems for pesantren and madrasah with WhatsApp notifications.</div>
+        <div class="service-tags">
+          <span class="service-tag">mPDF</span>
+          <span class="service-tag">WhatsApp API</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🤖</div>
+        <div class="service-title" data-en="AI-Assisted Development" data-id="Pengembangan Berbantuan AI">AI-Assisted Development</div>
+        <div class="service-desc" data-en="Faster delivery and smarter solutions by combining development skills with AI tools." data-id="Pengiriman lebih cepat dengan menggabungkan keahlian pengembangan dan alat AI.">Faster delivery and smarter solutions by combining development skills with AI tools.</div>
+        <div class="service-tags">
+          <span class="service-tag" data-en="Efficient builds" data-id="Build efisien">Efficient builds</span>
+          <span class="service-tag" data-en="Quick turnaround" data-id="Pengerjaan cepat">Quick turnaround</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="section" id="sec-about">
+    <div class="section-header">
+      <h2 class="section-title" data-en="About Me" data-id="Tentang Saya">About Me</h2>
+    </div>
+    <div class="about-inner">
+      <p class="about-desc" data-en="I'm a developer and educator from Pati, Indonesia, passionate about building practical digital tools for schools and Islamic institutions. I focus on turning complex workflows into simple, usable web applications — and I'm not afraid to use AI to build better and faster." data-id="Saya adalah developer dan pendidik dari Pati, Indonesia, yang bersemangat membangun alat digital praktis untuk sekolah dan lembaga Islam. Saya fokus mengubah alur kerja yang rumit menjadi aplikasi web yang sederhana dan mudah digunakan — dan tidak ragu menggunakan AI untuk membangun lebih baik dan lebih cepat.">I'm a developer and educator from Pati, Indonesia, passionate about building practical digital tools for schools and Islamic institutions. I focus on turning complex workflows into simple, usable web applications — and I'm not afraid to use AI to build better and faster.</p>
+      <p class="approach-title" data-en="My Approach" data-id="Pendekatan Saya">My Approach</p>
+      <div class="approach-grid">
+        <div class="approach-card">
+          <span class="approach-num">01</span>
+          <span class="approach-text" data-en="Understand the real problem" data-id="Pahami masalah yang sebenarnya">Understand the real problem</span>
+        </div>
+        <div class="approach-card">
+          <span class="approach-num">02</span>
+          <span class="approach-text" data-en="Plan before coding" data-id="Rencanakan sebelum coding">Plan before coding</span>
+        </div>
+        <div class="approach-card">
+          <span class="approach-num">03</span>
+          <span class="approach-text" data-en="Build simple, iterate fast" data-id="Bangun simpel, iterasi cepat">Build simple, iterate fast</span>
+        </div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-num">3+</div>
+          <div class="stat-label" data-en="Projects Built" data-id="Proyek Dibangun">Projects Built</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">1+</div>
+          <div class="stat-label" data-en="Years Developing" data-id="Tahun Mengembangkan">Years Developing</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">∞</div>
+          <div class="stat-label" data-en="Problems to Solve" data-id="Masalah untuk Diselesaikan">Problems to Solve</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SKILLS -->
+  <div class="section" id="sec-skills">
+    <div class="section-header">
+      <h2 class="section-title" data-en="Skills" data-id="Keahlian">Skills</h2>
+      <p class="section-sub" data-en="Tools and technologies I work with" data-id="Alat dan teknologi yang saya gunakan">Tools and technologies I work with</p>
+    </div>
+    <div class="skills-inner">
+      <div class="skills-grid">
+        <div class="skill-card">
+          <div class="skill-card-title">Backend</div>
+          <div class="skill-tags">
+            <span class="skill-tag">PHP</span>
+            <span class="skill-tag">CodeIgniter 4</span>
+            <span class="skill-tag">MySQL</span>
+            <span class="skill-tag">REST API</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card-title">Frontend</div>
+          <div class="skill-tags">
+            <span class="skill-tag">HTML & CSS</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">Tailwind CSS</span>
+            <span class="skill-tag">SVG & Canvas</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card-title">Tools & DevOps</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Git & GitHub</span>
+            <span class="skill-tag">cPanel</span>
+            <span class="skill-tag">Laragon</span>
+            <span class="skill-tag">GitHub Pages</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card-title" data-en="Creative & AI" data-id="Kreatif & AI">Creative & AI</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Adobe Premiere Pro</span>
+            <span class="skill-tag">CapCut</span>
+            <span class="skill-tag">Claude AI</span>
+            <span class="skill-tag">Prompt Engineering</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="section" id="sec-projects">
+    <div class="section-header">
+      <h2 class="section-title" data-en="Projects" data-id="Proyek">Projects</h2>
+      <p class="section-sub" data-en="A showcase of what I've built" data-id="Karya yang sudah saya bangun">A showcase of what I've built</p>
+    </div>
+    <div class="projects-inner">
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-thumb">
+            <span class="project-thumb-label">NUNA</span>
+          </div>
+          <div class="project-body">
+            <span class="project-tag">Flow Diagram Tool</span>
+            <div class="project-name">Nuna Work</div>
+            <div class="project-desc" data-en="A web-based user flow diagram tool with drag-and-drop, bezier connections, undo stack, and PDF export. Hosted on shared hosting." data-id="Alat diagram alur berbasis web dengan drag-and-drop, koneksi bezier, undo stack, dan ekspor PDF.">A web-based user flow diagram tool with drag-and-drop, bezier connections, undo stack, and PDF export.</div>
+          </div>
+          <div class="project-footer">
+            <div class="project-tech">
+              <span class="project-tech-tag">PHP</span>
+              <span class="project-tech-tag">MySQL</span>
+              <span class="project-tech-tag">SVG</span>
+            </div>
+            <!-- Ganti href dengan URL live project -->
+            <a class="project-link" href="#" target="_blank">Live →</a>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-thumb">
+            <span class="project-thumb-label">AKSARA</span>
+          </div>
+          <div class="project-body">
+            <span class="project-tag" data-en="Document Management" data-id="Manajemen Dokumen">Document Management</span>
+            <div class="project-name">AKSARA</div>
+            <div class="project-desc" data-en="White-label document and letter management app for pesantren. Features mPDF generation and WhatsApp URL notifications." data-id="Aplikasi manajemen surat white-label untuk pesantren. Dilengkapi generasi mPDF dan notifikasi WhatsApp.">White-label document and letter management app for pesantren. Features mPDF generation and WhatsApp URL notifications.</div>
+          </div>
+          <div class="project-footer">
+            <div class="project-tech">
+              <span class="project-tech-tag">CodeIgniter 4</span>
+              <span class="project-tech-tag">mPDF</span>
+              <span class="project-tech-tag">Tailwind</span>
+            </div>
+            <a class="project-link" href="#" target="_blank">In Dev →</a>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-thumb">
+            <span class="project-thumb-label">EDURA</span>
+          </div>
+          <div class="project-body">
+            <span class="project-tag" data-en="Education Tech" data-id="Teknologi Pendidikan">Education Tech</span>
+            <div class="project-name">EDURA / e-Raport</div>
+            <div class="project-desc" data-en="Digital report card system for Indonesian schools — replacing fragmented Excel workflows with a modern multi-role web app." data-id="Sistem rapor digital untuk sekolah Indonesia — menggantikan Excel yang berantakan dengan aplikasi web multi-peran.">Digital report card system for Indonesian schools — replacing fragmented Excel workflows with a modern multi-role web app.</div>
+          </div>
+          <div class="project-footer">
+            <div class="project-tech">
+              <span class="project-tech-tag">CodeIgniter 4</span>
+              <span class="project-tech-tag">MySQL</span>
+            </div>
+            <a class="project-link" href="#" target="_blank">In Dev →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="section" id="sec-contact">
+    <div class="section-header">
+      <h2 class="section-title" data-en="Let's Work Together" data-id="Mari Berkolaborasi">Let's Work Together</h2>
+    </div>
+    <div class="contact-inner">
+      <p class="contact-desc" data-en="Have a project in mind? Whether it's a school management system, document tool, or something new — let's talk about it." data-id="Punya proyek yang ingin dikerjakan? Entah itu sistem sekolah, alat dokumen, atau sesuatu yang baru — mari diskusi.">Have a project in mind? Whether it's a school management system, document tool, or something new — let's talk about it.</p>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <div class="contact-card-label">WhatsApp</div>
+          <!-- Ganti nomor WA di href dan teks di bawah -->
+          <div class="contact-card-val">+62 ···</div>
+          <a class="contact-card-link" href="https://wa.me/62NOMORMU" target="_blank" data-en="Chat on WhatsApp →" data-id="Chat di WhatsApp →">Chat on WhatsApp →</a>
+        </div>
+        <div class="contact-card">
+          <div class="contact-card-label">GitHub</div>
+          <div class="contact-card-val">mushonifulhanif</div>
+          <a class="contact-card-link" href="https://github.com/mushonifulhanif" target="_blank">github.com/mushonifulhanif →</a>
+        </div>
+      </div>
+      <div style="text-align:center;padding-top:20px;border-top:1px solid var(--border)">
+        <p style="font-size:12px;color:var(--text3)" data-en="Based in Pati, Central Java — open to remote projects across Indonesia." data-id="Berbasis di Pati, Jawa Tengah — terbuka untuk proyek remote di seluruh Indonesia.">Based in Pati, Central Java — open to remote projects across Indonesia.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const lang={current:'en'};
+
+function setLang(l,btn){
+  lang.current=l;
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('[data-en]').forEach(el=>{
+    const val=el.getAttribute('data-'+l);
+    if(val){
+      if(el.tagName==='INPUT'||el.tagName==='TEXTAREA'){el.placeholder=val}
+      else{el.innerHTML=val}
+    }
+  });
+}
+
+function showSection(id,link){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(a=>a.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  if(link)link.classList.add('active');
+  const nl=document.getElementById('navLinks');
+  nl.classList.remove('open');
+}
+
+function toggleMenu(){
+  document.getElementById('navLinks').classList.toggle('open');
+}
+
+function checkMobile(){
+  const body=document.getElementById('body');
+  if(window.innerWidth<768){
+    body.classList.add('mobile-mode');
+  } else {
+    body.classList.remove('mobile-mode');
+  }
+}
+checkMobile();
+window.addEventListener('resize',checkMobile);
+</script>
+</body>
+</html>
